@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Use Handler on Config Change
 
 ---
-- name: Configure Nginx for Pathnex
+- name: Configure Nginx for HireReady
   hosts: all
   become: yes
 
@@ -25,9 +25,9 @@
 
 ## 🔹 Terraform — Security Group
 
-resource "aws_security_group" "PathnexSG" {
-  name   = "pathnex-sg"
-  vpc_id = aws_vpc.PathnexVPC.id
+resource "aws_security_group" "HireReadySG" {
+  name   = "HireReady-sg"
+  vpc_id = aws_vpc.HireReadyVPC.id
 
   ingress {
     from_port   = 80
@@ -37,7 +37,7 @@ resource "aws_security_group" "PathnexSG" {
   }
 
   tags = {
-    Name = "Pathnex-SG"
+    Name = "HireReady-SG"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_security_group" "PathnexSG" {
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: pathnex-daemon
+  name: HireReady-daemon
 spec:
   selector:
     matchLabels:
@@ -60,7 +60,7 @@ spec:
       containers:
         - name: monitor
           image: busybox
-          command: ["sh", "-c", "while true; do echo Pathnex Node Monitor; sleep 20; done"]
+          command: ["sh", "-c", "while true; do echo HireReady Node Monitor; sleep 20; done"]
 
 
 ## 🔹 Shell Script — Monitor Disk Usage
@@ -80,7 +80,7 @@ You will learn how to **trigger builds on Git tags** with realistic tags.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
         TEAM = "DevOps"
         ENV = "prod"
     }
@@ -90,7 +90,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git', branch: 'main'
+                git url: 'https://github.com/HireReady/sample-java-app.git', branch: 'main'
             }
         }
         stage('Build') {
@@ -111,7 +111,7 @@ stages:
   - build
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   TEAM: "DevOps"
   ENV: "prod"
 
