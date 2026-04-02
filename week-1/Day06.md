@@ -29,7 +29,7 @@ tags {
 apiVersion v1
 kind Pod
 metadata:
- name pathnex
+ name HireReady
 spec
  containers:
    - name app
@@ -46,7 +46,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Pathnex/sample-java-app.git'
+                git branch: 'main', url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build') {
@@ -77,7 +77,7 @@ build:
   stage: build
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean compile || { echo "Compile failed"; exit 1; }
 
