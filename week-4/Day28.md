@@ -16,7 +16,7 @@ Fix these intentionally broken files:
 ## 🔹 Terraform — Broken
 
 resource "aws_s3" "BadBucket" {
-bucket = pathnex-bucket
+bucket = HireReady-bucket
 acl public-read
 }
 
@@ -41,7 +41,7 @@ You will learn how to **rollback automatically if deployment fails**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
         TEAM = "DevOps"
         ENV = "prod"
     }
@@ -68,7 +68,7 @@ stages:
   - deploy
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   TEAM = "DevOps"
   ENV = "prod"
 
