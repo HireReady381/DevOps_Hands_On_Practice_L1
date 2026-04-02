@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Install Java & Set JAVA_HOME
 
 ---
-- name: Install Java on Pathnex server
+- name: Install Java on HireReady server
   hosts: all
   become: yes
 
@@ -25,11 +25,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_s3_bucket" "PathnexBucket" {
-  bucket = "pathnex-devops-bucket"
+resource "aws_s3_bucket" "HireReadyBucket" {
+  bucket = "HireReady-devops-bucket"
 
   tags = {
-    Name = "PathnexBucket"
+    Name = "HireReadyBucket"
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_s3_bucket" "PathnexBucket" {
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: pathnex-cron
+  name: HireReady-cron
 spec:
   schedule: "*/5 * * * *"
   jobTemplate:
@@ -49,7 +49,7 @@ spec:
           containers:
             - name: job
               image: busybox
-              command: ["sh", "-c", "echo Pathnex CronJob running"]
+              command: ["sh", "-c", "echo HireReady CronJob running"]
           restartPolicy: OnFailure
 
 
@@ -72,13 +72,13 @@ You will learn how to **send Slack notifications after build success or failure*
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
         SLACK_CHANNEL = "#devops"
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build') {
@@ -104,14 +104,14 @@ stages:
   - build
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   SLACK_WEBHOOK: "https://hooks.slack.com/services/XXXXX/YYYYY/ZZZZZ"
 
 build:
   stage: build
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean package
-    - curl -X POST -H 'Content-type: application/json' --data '{"text":"Build success for Pathnex"}' $SLACK_WEBHOOK
+    - curl -X POST -H 'Content-type: application/json' --data '{"text":"Build success for HireReady"}' $SLACK_WEBHOOK
