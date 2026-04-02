@@ -17,22 +17,22 @@
 
 ## 🔹 Terraform — Route Table + Association
 
-resource "aws_route_table" "PathnexRT" {
-  vpc_id = aws_vpc.PathnexVPC.id
+resource "aws_route_table" "HireReadyRT" {
+  vpc_id = aws_vpc.HireReadyVPC.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.PathnexIGW.id
+    gateway_id = aws_internet_gateway.HireReadyIGW.id
   }
 
   tags = {
-    Name = "Pathnex-RouteTable"
+    Name = "HireReady-RouteTable"
   }
 }
 
-resource "aws_route_table_association" "PathnexRTA" {
-  subnet_id      = aws_subnet.PathnexSubnet.id
-  route_table_id = aws_route_table.PathnexRT.id
+resource "aws_route_table_association" "HireReadyRTA" {
+  subnet_id      = aws_subnet.HireReadySubnet.id
+  route_table_id = aws_route_table.HireReadyRT.id
 }
 
 
@@ -41,10 +41,10 @@ resource "aws_route_table_association" "PathnexRTA" {
 apiVersion: v1
 kind: Secret
 metadata:
-  name: pathnex-secret
+  name: HireReady-secret
 type: Opaque
 data:
-  password: cGF0aG5leDEyMw==   # "pathnex123" base64
+  password: cGF0aG5leDEyMw==   # "HireReady123" base64
 
 
 ## 🔹 Shell Script — For Loop 1–10
@@ -64,12 +64,12 @@ You will learn how to **reuse dependencies to speed up builds**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build') {
@@ -100,6 +100,6 @@ build:
     paths:
       - .m2/repository
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean compile
