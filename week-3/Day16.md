@@ -4,7 +4,7 @@
 
 # Students must create:
 # roles/
-#   pathnex/
+#   HireReady/
 #     tasks/main.yml
 #     handlers/main.yml
 #     templates/
@@ -21,8 +21,8 @@ Example task file:
 
 ## 🔹 Terraform — DynamoDB Table
 
-resource "aws_dynamodb_table" "PathnexTable" {
-  name           = "PathnexTrainingTable"
+resource "aws_dynamodb_table" "HireReadyTable" {
+  name           = "HireReadyTrainingTable"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "ID"
 
@@ -32,7 +32,7 @@ resource "aws_dynamodb_table" "PathnexTable" {
   }
 
   tags = {
-    Name = "Pathnex-DDB"
+    Name = "HireReady-DDB"
   }
 }
 
@@ -42,24 +42,24 @@ resource "aws_dynamodb_table" "PathnexTable" {
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pathnex-db
+  name: HireReady-db
 spec:
-  serviceName: "pathnex"
+  serviceName: "HireReady"
   replicas: 2
   selector:
     matchLabels:
-      app: pathnex-db
+      app: HireReady-db
   template:
     metadata:
       labels:
-        app: pathnex-db
+        app: HireReady-db
     spec:
       containers:
         - name: db
           image: mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "Pathnex123"
+              value: "HireReady123"
 
 
 ## 🔹 Shell Script — Check Service Running
@@ -83,7 +83,7 @@ You will learn how to **promote build artifacts from dev to staging**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Build') {
@@ -121,5 +121,5 @@ promote:
   stage: promote
   image: alpine:latest
   script:
-    - echo "Promoting artifacts for Pathnex"
+    - echo "Promoting artifacts for HireReady"
   when: manual
