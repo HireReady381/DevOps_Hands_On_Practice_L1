@@ -3,24 +3,24 @@
 ## 🔹 Ansible — Use Jinja2 Template
 
 ---
-- name: Deploy template for Pathnex
+- name: Deploy template for HireReady
   hosts: all
   become: yes
 
   tasks:
     - name: Copy template file
       template:
-        src: pathnex.conf.j2
-        dest: /etc/pathnex.conf
+        src: HireReady.conf.j2
+        dest: /etc/HireReady.conf
 
 
 ## 🔹 Terraform — Internet Gateway
 
-resource "aws_internet_gateway" "PathnexIGW" {
-  vpc_id = aws_vpc.PathnexVPC.id
+resource "aws_internet_gateway" "HireReadyIGW" {
+  vpc_id = aws_vpc.HireReadyVPC.id
 
   tags = {
-    Name = "Pathnex-IGW"
+    Name = "HireReady-IGW"
   }
 }
 
@@ -30,10 +30,10 @@ resource "aws_internet_gateway" "PathnexIGW" {
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: pathnex-config
+  name: HireReady-config
 data:
   APP_MODE: "production"
-  WELCOME_MSG: "Hello Pathnex"
+  WELCOME_MSG: "Hello HireReady"
 
 
 ## 🔹 Shell Script — Check CPU Load
@@ -53,12 +53,12 @@ You will learn how to **save build artifacts for future use**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build') {
@@ -84,7 +84,7 @@ build:
   stage: build
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean package
   artifacts:
