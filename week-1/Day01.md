@@ -1,11 +1,11 @@
 # Day 01 — Basics
 
-## 🔹 Ansible Task — Install Nginx on Pathnex Server
+## 🔹 Ansible Task — Install Nginx on HireReady Server
 
 Rewrite this YAML manually:
 
 ---
-- name: Install Nginx on Pathnex server
+- name: Install Nginx on HireReady server
   hosts: all
   become: yes
 
@@ -22,12 +22,12 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "PathnexEC2" {
+resource "aws_instance" "HireReadyEC2" {
   ami           = "ami-0abcd1234abcd1234"
   instance_type = "c5.xlarge"
 
   tags = {
-    Name = "Pathnex-EC2"
+    Name = "HireReady-EC2"
   }
 }
 
@@ -37,7 +37,7 @@ resource "aws_instance" "PathnexEC2" {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pathnex-pod
+  name: HireReady-pod
 spec:
   containers:
     - name: web
@@ -62,7 +62,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Pathnex/sample-java-app.git'
+                git branch: 'main', url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('List Files') {
@@ -82,6 +82,6 @@ stages:
 git-checkout:
   stage: checkout
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - ls -la
