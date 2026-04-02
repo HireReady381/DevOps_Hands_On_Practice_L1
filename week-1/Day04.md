@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Install Multiple Packages
 
 ---
-- name: Install packages for Pathnex
+- name: Install packages for HireReady
   hosts: all
   become: yes
 
@@ -22,18 +22,18 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_key_pair" "PathnexKey" {
-  key_name   = "PathnexKey"
+resource "aws_key_pair" "HireReadyKey" {
+  key_name   = "HireReadyKey"
   public_key = "ssh-rsa AAAA...."
 }
 
-resource "aws_instance" "PathnexEC2" {
+resource "aws_instance" "HireReadyEC2" {
   ami           = "ami-0abcd1234abcd1234"
   instance_type = "c6i.8xlarge"
-  key_name      = aws_key_pair.PathnexKey.key_name
+  key_name      = aws_key_pair.HireReadyKey.key_name
 
   tags = {
-    Name = "Pathnex-EC2"
+    Name = "HireReady-EC2"
   }
 }
 
@@ -43,10 +43,10 @@ resource "aws_instance" "PathnexEC2" {
 apiVersion: v1
 kind: Service
 metadata:
-  name: pathnex-service
+  name: HireReady-service
 spec:
   selector:
-    app: pathnex-app
+    app: HireReady-app
   ports:
     - port: 80
       targetPort: 80
@@ -86,7 +86,7 @@ maven-build:
   stage: build-test
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean compile
   parallel: 1
