@@ -3,12 +3,12 @@
 ## 🔹 Ansible — Install Packages Using Variables
 
 ---
-- name: Install packages for Pathnex using variables
+- name: Install packages for HireReady using variables
   hosts: all
   become: yes
 
   vars:
-    pathnex_packages:
+    HireReady_packages:
       - tree
       - unzip
       - vim
@@ -16,7 +16,7 @@
   tasks:
     - name: Install required packages
       yum:
-        name: "{{ pathnex_packages }}"
+        name: "{{ HireReady_packages }}"
         state: present
 
 
@@ -26,21 +26,21 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_vpc" "PathnexVPC" {
+resource "aws_vpc" "HireReadyVPC" {
   cidr_block = "10.10.0.0/16"
 
   tags = {
-    Name = "Pathnex-VPC"
+    Name = "HireReady-VPC"
   }
 }
 
-resource "aws_subnet" "PathnexSubnet" {
-  vpc_id                  = aws_vpc.PathnexVPC.id
+resource "aws_subnet" "HireReadySubnet" {
+  vpc_id                  = aws_vpc.HireReadyVPC.id
   cidr_block              = "10.10.1.0/24"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Pathnex-Subnet"
+    Name = "HireReady-Subnet"
   }
 }
 
@@ -50,7 +50,7 @@ resource "aws_subnet" "PathnexSubnet" {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pathnex-probe-pod
+  name: HireReady-probe-pod
 spec:
   containers:
     - name: web
@@ -71,7 +71,7 @@ spec:
 
 #!/bin/bash
 
-for item in Pathnex DevOps Training; do
+for item in HireReady DevOps Training; do
   echo "Item: $item"
 done
 
@@ -87,12 +87,12 @@ pipeline {
         string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deployment Environment')
     }
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Pathnex/sample-java-app.git'
+                git branch: 'main', url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build') {
@@ -125,7 +125,7 @@ build:
   stage: build
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean compile
   only:
@@ -135,7 +135,7 @@ deploy:
   stage: deploy
   image: alpine:latest
   script:
-    - echo "Deploying to $CI_ENVIRONMENT_NAME by Pathnex"
+    - echo "Deploying to $CI_ENVIRONMENT_NAME by HireReady"
   only:
     variables:
       - $CI_ENVIRONMENT_NAME == "dev"
