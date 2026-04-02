@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Install & Enable Nginx
 
 ---
-- name: Install and start Nginx on Pathnex
+- name: Install and start Nginx on HireReady
   hosts: all
   become: yes
 
@@ -26,14 +26,14 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "PathnexEC2" {
+resource "aws_instance" "HireReadyEC2" {
   ami           = "ami-0abcd1234abcd1234"
   instance_type = "r5.2xlarge"
 
   tags = {
-    Name        = "Pathnex-Server"
+    Name        = "HireReady-Server"
     Environment = "Training"
-    Owner       = "PathnexStudent"
+    Owner       = "HireReadyStudent"
   }
 }
 
@@ -43,16 +43,16 @@ resource "aws_instance" "PathnexEC2" {
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pathnex-deployment
+  name: HireReady-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: pathnex-app
+      app: HireReady-app
   template:
     metadata:
       labels:
-        app: pathnex-app
+        app: HireReady-app
     spec:
       containers:
         - name: app
@@ -80,7 +80,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Compile') {
@@ -112,7 +112,7 @@ maven-build:
   stage: build
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean compile
 
