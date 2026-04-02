@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Install MariaDB
 
 ---
-- name: Install MariaDB for Pathnex
+- name: Install MariaDB for HireReady
   hosts: all
   become: yes
 
@@ -22,17 +22,17 @@
 
 ## 🔹 Terraform — Output Public IP (r5.2xlarge)
 
-resource "aws_instance" "PathnexServer" {
+resource "aws_instance" "HireReadyServer" {
   ami           = "ami-0abcd1234abcd1234"
   instance_type = "r5.2xlarge"
 
   tags = {
-    Name = "Pathnex-Output-EC2"
+    Name = "HireReady-Output-EC2"
   }
 }
 
-output "PathnexPublicIP" {
-  value = aws_instance.PathnexServer.public_ip
+output "HireReadyPublicIP" {
+  value = aws_instance.HireReadyServer.public_ip
 }
 
 
@@ -41,7 +41,7 @@ output "PathnexPublicIP" {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pathnex-sidecar
+  name: HireReady-sidecar
 spec:
   containers:
     - name: main
@@ -56,7 +56,7 @@ spec:
 #!/bin/bash
 
 greet() {
-  echo "Welcome to Pathnex DevOps Training"
+  echo "Welcome to HireReady DevOps Training"
 }
 
 greet
@@ -71,12 +71,12 @@ You will learn how to **send email notifications on failure or success**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build') {
@@ -87,12 +87,12 @@ pipeline {
     }
     post {
         success {
-            mail to: 'team@pathnex.com',
+            mail to: 'team@HireReady.com',
                  subject: "SUCCESS: Build #${env.BUILD_NUMBER}",
                  body: "Build completed successfully for $INSTITUTE_NAME"
         }
         failure {
-            mail to: 'team@pathnex.com',
+            mail to: 'team@HireReady.com',
                  subject: "FAILURE: Build #${env.BUILD_NUMBER}",
                  body: "Build failed for $INSTITUTE_NAME"
         }
@@ -109,8 +109,8 @@ build:
   stage: build
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - mvn clean package
   after_script:
-    - echo "Sending notification email to team@pathnex.com"
+    - echo "Sending notification email to team@HireReady.com"
