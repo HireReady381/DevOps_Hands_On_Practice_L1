@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Create Multiple Users in Loop
 
 ---
-- name: Create multiple Pathnex users
+- name: Create multiple HireReady users
   hosts: all
   become: yes
 
@@ -23,13 +23,13 @@
 
 ## 🔹 Terraform — Application Load Balancer
 
-resource "aws_lb" "PathnexALB" {
-  name               = "pathnex-alb"
+resource "aws_lb" "HireReadyALB" {
+  name               = "HireReady-alb"
   load_balancer_type = "application"
-  subnets            = [aws_subnet.PathnexSubnet.id]
+  subnets            = [aws_subnet.HireReadySubnet.id]
 
   tags = {
-    Name = "Pathnex-ALB"
+    Name = "HireReady-ALB"
   }
 }
 
@@ -39,23 +39,23 @@ resource "aws_lb" "PathnexALB" {
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: pathnex-namespace
+  name: HireReady-namespace
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pathnex-deploy
-  namespace: pathnex-namespace
+  name: HireReady-deploy
+  namespace: HireReady-namespace
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: pathnex
+      app: HireReady
   template:
     metadata:
       labels:
-        app: pathnex
+        app: HireReady
     spec:
       containers:
         - name: app
@@ -80,7 +80,7 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'prod'], description: 'Deployment Environment')
     }
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Deploy') {
@@ -98,7 +98,7 @@ stages:
   - deploy
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   ENVIRONMENT: "staging"
 
 deploy:
