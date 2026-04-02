@@ -3,14 +3,14 @@
 ## 🔹 Ansible — Create User
 
 ---
-- name: Create Pathnex user
+- name: Create HireReady user
   hosts: all
   become: yes
 
   tasks:
-    - name: Create user pathnex-admin
+    - name: Create user HireReady-admin
       user:
-        name: pathnex-admin
+        name: HireReady-admin
         shell: /bin/bash
 
 
@@ -20,9 +20,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_security_group" "PathnexSG" {
-  name        = "PathnexSG"
-  description = "Pathnex SG for SSH"
+resource "aws_security_group" "HireReadySG" {
+  name        = "HireReadySG"
+  description = "HireReady SG for SSH"
 
   ingress {
     from_port   = 22
@@ -32,13 +32,13 @@ resource "aws_security_group" "PathnexSG" {
   }
 }
 
-resource "aws_instance" "PathnexEC2" {
+resource "aws_instance" "HireReadyEC2" {
   ami                    = "ami-0abcd1234abcd1234"
   instance_type          = "r6i.4xlarge"
-  vpc_security_group_ids = [aws_security_group.PathnexSG.id]
+  vpc_security_group_ids = [aws_security_group.HireReadySG.id]
 
   tags = {
-    Name = "Pathnex-EC2"
+    Name = "HireReady-EC2"
   }
 }
 
@@ -48,7 +48,7 @@ resource "aws_instance" "PathnexEC2" {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pathnex-env-pod
+  name: HireReady-env-pod
 spec:
   containers:
     - name: app
@@ -61,7 +61,7 @@ spec:
 ## 🔹 Shell Script — Check File Exists
 
 #!/bin/bash
-FILE="/tmp/pathnex.txt"
+FILE="/tmp/HireReady.txt"
 
 if [ -f "$FILE" ]; then
   echo "File exists"
@@ -82,7 +82,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-node-app.git'
+                git url: 'https://github.com/HireReady/sample-node-app.git'
             }
         }
         stage('Install Dependencies') {
@@ -114,7 +114,7 @@ node-install:
   stage: install
   image: node:16
   script:
-    - git clone https://github.com/Pathnex/sample-node-app.git
+    - git clone https://github.com/HireReady/sample-node-app.git
     - cd sample-node-app
     - npm install
 
