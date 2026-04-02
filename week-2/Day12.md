@@ -3,26 +3,26 @@
 ## 🔹 Ansible — Ensure File With Content
 
 ---
-- name: Create config file for Pathnex
+- name: Create config file for HireReady
   hosts: all
   become: yes
 
   tasks:
     - name: Write content to file
       copy:
-        dest: /etc/pathnex.conf
+        dest: /etc/HireReady.conf
         content: |
-          Welcome to Pathnex DevOps Training
+          Welcome to HireReady DevOps Training
           Today is Day 12
 
 
 ## 🔹 Terraform — RDS Skeleton
 
-resource "aws_db_instance" "PathnexRDS" {
+resource "aws_db_instance" "HireReadyRDS" {
   allocated_storage      = 20
   engine                 = "mysql"
   instance_class         = "db.t3.micro"
-  name                   = "pathnexdb"
+  name                   = "HireReadydb"
   username               = "admin"
   password               = "password123"
   skip_final_snapshot    = true
@@ -34,7 +34,7 @@ resource "aws_db_instance" "PathnexRDS" {
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pathnex-rolling
+  name: HireReady-rolling
 spec:
   replicas: 3
   strategy:
@@ -60,7 +60,7 @@ spec:
 #!/bin/bash
 
 SOURCE="/var/log"
-DEST="/backup/pathnex-$(date +%F).tar.gz"
+DEST="/backup/HireReady-$(date +%F).tar.gz"
 
 tar -czf $DEST $SOURCE
 echo "Backup created at: $DEST"
@@ -74,7 +74,7 @@ You will learn how to **handle multiple branches in Jenkins pipelines**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Checkout') {
