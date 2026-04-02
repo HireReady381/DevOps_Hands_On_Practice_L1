@@ -50,17 +50,17 @@ You will learn how to **use credentials securely in Jenkins**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Use Secret') {
             steps {
-                withCredentials([string(credentialsId: 'PATHNEX_API_KEY', variable: 'API_KEY')]) {
+                withCredentials([string(credentialsId: 'HireReady_API_KEY', variable: 'API_KEY')]) {
                     sh 'echo "Using secret $API_KEY for $INSTITUTE_NAME"'
                 }
             }
@@ -75,7 +75,7 @@ stages:
   - build
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   API_KEY: "PLACEHOLDER_SECRET"
 
 build:
