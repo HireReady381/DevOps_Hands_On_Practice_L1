@@ -53,7 +53,7 @@ You will learn how to **run the same build on multiple environments**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     matrix {
         axes {
