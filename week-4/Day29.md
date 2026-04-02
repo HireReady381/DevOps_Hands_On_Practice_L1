@@ -11,7 +11,7 @@ Complete the following:
 
 ## 2️⃣ Ansible
 - Install nginx
-- Deploy "Welcome to Pathnex" HTML page
+- Deploy "Welcome to HireReady" HTML page
 - Start & enable service
 
 ## 3️⃣ Kubernetes
@@ -39,7 +39,7 @@ Complete the following:
 
 ## 2️⃣ Ansible
 - Install nginx
-- Deploy "Welcome to Pathnex" HTML page
+- Deploy "Welcome to HireReady" HTML page
 - Start & enable service
 
 ## 3️⃣ Kubernetes
@@ -68,10 +68,10 @@ You will learn to **combine all tasks into a realistic Jenkins Pipeline** with p
 - Top process
 
 - Use environment variables for all stages:
-- INSTITUTE_NAME = "Pathnex"
+- INSTITUTE_NAME = "HireReady"
 - TEAM = "DevOps"
 - ENV = "prod"
-- PROJECT = "Pathnex-Training"
+- PROJECT = "HireReady-Training"
 
 ## 6️⃣ GitLab CI
 You will learn to **combine all tasks in a realistic GitLab CI pipeline**.
@@ -87,7 +87,7 @@ You will learn to **combine all tasks in a realistic GitLab CI pipeline**.
 - Top process
 
 - Define variables:
-- INSTITUTE_NAME = "Pathnex"
+- INSTITUTE_NAME = "HireReady"
 - TEAM = "DevOps"
 - ENV = "prod"
-- PROJECT = "Pathnex-Training"
+- PROJECT = "HireReady-Training"
