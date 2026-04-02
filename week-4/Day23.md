@@ -8,19 +8,19 @@
   become: yes
 
   tasks:
-    - name: Create Pathnex user
+    - name: Create HireReady user
       user:
         name: devuser
-        comment: "Pathnex Developer User"
+        comment: "HireReady Developer User"
 
 
 ## 🔹 Terraform — Elastic IP
 
-resource "aws_eip" "PathnexEIP" {
-  instance = aws_instance.PathnexEC2.id
+resource "aws_eip" "HireReadyEIP" {
+  instance = aws_instance.HireReadyEC2.id
 
   tags = {
-    Name = "Pathnex-EIP"
+    Name = "HireReady-EIP"
   }
 }
 
@@ -30,12 +30,12 @@ resource "aws_eip" "PathnexEIP" {
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: pathnex-hpa
+  name: HireReady-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: pathnex-deploy
+    name: HireReady-deploy
   minReplicas: 2
   maxReplicas: 6
   metrics:
@@ -64,7 +64,7 @@ You will learn how to **build and tag Docker images** with proper labels.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
         TEAM = "DevOps"
         ENV = "staging"
         PROJECT = "WebApp"
@@ -72,13 +72,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build Docker Image') {
             steps {
                 sh '''
-                docker build -t pathnex/webapp:${ENV}-${BUILD_NUMBER} \
+                docker build -t HireReady/webapp:${ENV}-${BUILD_NUMBER} \
                 --label "INSTITUTE_NAME=$INSTITUTE_NAME" \
                 --label "TEAM=$TEAM" \
                 --label "ENV=$ENV" \
@@ -96,7 +96,7 @@ stages:
   - docker-build
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   TEAM: "DevOps"
   ENV: "staging"
   PROJECT: "WebApp"
@@ -107,7 +107,7 @@ docker-build:
   services:
     - docker:dind
   script:
-    - docker build -t pathnex/webapp:${ENV}-${CI_PIPELINE_ID} \
+    - docker build -t HireReady/webapp:${ENV}-${CI_PIPELINE_ID} \
       --label "INSTITUTE_NAME=$INSTITUTE_NAME" \
       --label "TEAM=$TEAM" \
       --label "ENV=$ENV" \
