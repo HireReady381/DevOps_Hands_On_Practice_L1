@@ -23,7 +23,7 @@
 
 ## 🔹 Terraform — EC2 with User Data (c6a.12xlarge)
 
-resource "aws_instance" "PathnexEC2" {
+resource "aws_instance" "HireReadyEC2" {
   ami           = "ami-0abcd1234abcd1234"
   instance_type = "c6a.12xlarge"
 
@@ -34,7 +34,7 @@ systemctl start httpd
 EOF
 
   tags = {
-    Name = "Pathnex-EC2"
+    Name = "HireReady-EC2"
   }
 }
 
@@ -44,7 +44,7 @@ EOF
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pathnex-limited-pod
+  name: HireReady-limited-pod
 spec:
   containers:
     - name: app
@@ -63,7 +63,7 @@ You will learn how to **use environment variables in Jenkins pipelines**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Print') {
@@ -86,13 +86,13 @@ stages:
   - build
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
 
 build:
   stage: build
   image: maven:3.8.1-jdk-17
   script:
-    - git clone https://github.com/Pathnex/sample-java-app.git
+    - git clone https://github.com/HireReady/sample-java-app.git
     - cd sample-java-app
     - echo "Welcome to $INSTITUTE_NAME DevOps Training"
     - mvn clean package -Dinstitute.name=$INSTITUTE_NAME
