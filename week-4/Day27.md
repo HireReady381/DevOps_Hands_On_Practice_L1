@@ -3,33 +3,33 @@
 ## 🔹 Ansible — Copy Directory Recursively
 
 ---
-- name: Copy Pathnex files
+- name: Copy HireReady files
   hosts: all
   become: yes
 
   tasks:
     - name: Copy directory
       copy:
-        src: /opt/pathnex/
-        dest: /backup/pathnex/
+        src: /opt/HireReady/
+        dest: /backup/HireReady/
         remote_src: yes
 
 
 ## 🔹 Terraform — EBS Volume + Attachment
 
-resource "aws_ebs_volume" "PathnexVolume" {
+resource "aws_ebs_volume" "HireReadyVolume" {
   availability_zone = "us-east-1a"
   size              = 20
 
   tags = {
-    Name = "Pathnex-Volume"
+    Name = "HireReady-Volume"
   }
 }
 
-resource "aws_volume_attachment" "PathnexAttach" {
+resource "aws_volume_attachment" "HireReadyAttach" {
   device_name = "/dev/sdh"
-  volume_id   = aws_ebs_volume.PathnexVolume.id
-  instance_id = aws_instance.PathnexEC2.id
+  volume_id   = aws_ebs_volume.HireReadyVolume.id
+  instance_id = aws_instance.HireReadyEC2.id
 }
 
 
@@ -38,11 +38,11 @@ resource "aws_volume_attachment" "PathnexAttach" {
 apiVersion: v1
 kind: Service
 metadata:
-  name: pathnex-nodeport
+  name: HireReady-nodeport
 spec:
   type: NodePort
   selector:
-    app: pathnex
+    app: HireReady
   ports:
     - port: 80
       targetPort: 80
@@ -65,11 +65,11 @@ You will learn how to **write scripted pipelines with conditional logic**.
 
 node {
     def envName = "dev"
-    env.INSTITUTE_NAME = "Pathnex"
+    env.INSTITUTE_NAME = "HireReady"
     env.TEAM = "DevOps"
 
     stage('Checkout') {
-        git url: 'https://github.com/Pathnex/sample-java-app.git'
+        git url: 'https://github.com/HireReady/sample-java-app.git'
     }
 
     stage('Build') {
