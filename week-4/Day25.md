@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Modify Existing Line
 
 ---
-- name: Update SSH config for Pathnex
+- name: Update SSH config for HireReady
   hosts: all
   become: yes
 
@@ -17,13 +17,13 @@
 
 ## 🔹 Terraform — EC2 Key Pair Output
 
-resource "aws_key_pair" "PathnexKey" {
-  key_name   = "PathnexKey"
+resource "aws_key_pair" "HireReadyKey" {
+  key_name   = "HireReadyKey"
   public_key = file("~/.ssh/id_rsa.pub")
 }
 
-output "Pathnex_Key_Name" {
-  value = aws_key_pair.PathnexKey.key_name
+output "HireReady_Key_Name" {
+  value = aws_key_pair.HireReadyKey.key_name
 }
 
 
@@ -32,7 +32,7 @@ output "Pathnex_Key_Name" {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pathnex-sidecar
+  name: HireReady-sidecar
 spec:
   containers:
     - name: app
@@ -61,14 +61,14 @@ You will learn how to **cache Maven dependencies with realistic labels**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
         TEAM = "DevOps"
         ENV = "staging"
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Build') {
@@ -92,7 +92,7 @@ stages:
   - build
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   TEAM: "DevOps"
   ENV: "staging"
 
