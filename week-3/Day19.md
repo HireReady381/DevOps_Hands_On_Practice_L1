@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Deploy App Using Git
 
 ---
-- name: Deploy app from Git for Pathnex
+- name: Deploy app from Git for HireReady
   hosts: all
   become: yes
 
@@ -15,18 +15,18 @@
 
     - name: Clone repository
       git:
-        repo: "https://github.com/pathnex/app.git"
-        dest: "/opt/pathnex-app"
+        repo: "https://github.com/HireReady/app.git"
+        dest: "/opt/HireReady-app"
 
 
 ## 🔹 Terraform — RDS Skeleton (MySQL)
 
-resource "aws_db_instance" "PathnexRDS" {
+resource "aws_db_instance" "HireReadyRDS" {
   allocated_storage      = 20
   engine                 = "mysql"
   instance_class         = "db.t3.micro"
   username               = "admin"
-  password               = "Pathnex123"
+  password               = "HireReady123"
   skip_final_snapshot    = true
 }
 
@@ -36,7 +36,7 @@ resource "aws_db_instance" "PathnexRDS" {
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pathnex-rollout
+  name: HireReady-rollout
 spec:
   replicas: 3
   strategy:
@@ -78,7 +78,7 @@ You will learn how to **pause pipeline until manual approval**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Deploy') {
@@ -97,7 +97,7 @@ stages:
   - deploy
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
 
 deploy:
   stage: deploy
