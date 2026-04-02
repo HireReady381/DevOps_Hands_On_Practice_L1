@@ -7,9 +7,9 @@ You must rewrite all FOUR from scratch:
    - Start + enable service
 
 2. Terraform:
-   - Create EC2 (choose any Pathnex-approved type)
+   - Create EC2 (choose any HireReady-approved type)
    - Tag it with:
-       Owner: PathnexStudent
+       Owner: HireReadyStudent
 
 3. Kubernetes:
    - Deployment with 3 replicas
@@ -28,7 +28,7 @@ You will learn how to **define multiple environment deployments in one pipeline*
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Deploy to Dev') {
@@ -58,7 +58,7 @@ stages:
   - deploy
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
 
 deploy-dev:
   stage: deploy
