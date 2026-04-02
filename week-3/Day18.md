@@ -3,7 +3,7 @@
 ## 🔹 Ansible — Use Ansible Facts
 
 ---
-- name: Show system facts for Pathnex
+- name: Show system facts for HireReady
   hosts: all
 
   tasks:
@@ -24,14 +24,14 @@ variable "instance_type" {
 }
 
 # main.tf
-resource "aws_instance" "PathnexServer" {
+resource "aws_instance" "HireReadyServer" {
   ami           = "ami-0abcd1234abcd1234"
   instance_type = var.instance_type
 }
 
 # output
-output "pathnex_ip" {
-  value = aws_instance.PathnexServer.public_ip
+output "HireReady_ip" {
+  value = aws_instance.HireReadyServer.public_ip
 }
 
 
@@ -40,7 +40,7 @@ output "pathnex_ip" {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pathnex-affinity
+  name: HireReady-affinity
 spec:
   affinity:
     nodeAffinity:
@@ -60,7 +60,7 @@ spec:
 
 #!/bin/bash
 
-tar -czf /backup/pathnex-logs-$(date +%F).tar.gz /var/log/
+tar -czf /backup/HireReady-logs-$(date +%F).tar.gz /var/log/
 echo "Logs archived."
 
 
@@ -72,7 +72,7 @@ You will learn how to **simulate rollback if deployment fails**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
     }
     stages {
         stage('Deploy') {
@@ -97,7 +97,7 @@ stages:
   - deploy
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
 
 deploy:
   stage: deploy
