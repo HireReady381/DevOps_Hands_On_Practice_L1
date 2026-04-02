@@ -3,21 +3,21 @@
 ## 🔹 Ansible — Deploy Config Using Template
 
 ---
-- name: Deploy Pathnex template
+- name: Deploy HireReady template
   hosts: all
   become: yes
 
   tasks:
     - name: Create config
       template:
-        src: pathnex.conf.j2
-        dest: /etc/pathnex.conf
+        src: HireReady.conf.j2
+        dest: /etc/HireReady.conf
 
 
 ## 🔹 Terraform — ALB Listener
 
-resource "aws_lb_listener" "PathnexListener" {
-  load_balancer_arn = aws_lb.PathnexALB.arn
+resource "aws_lb_listener" "HireReadyListener" {
+  load_balancer_arn = aws_lb.HireReadyALB.arn
   port              = "80"
   protocol          = "HTTP"
 
@@ -25,7 +25,7 @@ resource "aws_lb_listener" "PathnexListener" {
     type = "fixed-response"
     fixed_response {
       content_type = "text/plain"
-      message_body = "Pathnex ALB Running"
+      message_body = "HireReady ALB Running"
       status_code  = "200"
     }
   }
@@ -37,20 +37,20 @@ resource "aws_lb_listener" "PathnexListener" {
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pathnex-pv
+  name: HireReady-pv
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/pathnex
+    path: /data/HireReady
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pathnex-pvc
+  name: HireReady-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -85,14 +85,14 @@ You will learn how to **run multiple test suites and tag reports**.
 pipeline {
     agent any
     environment {
-        INSTITUTE_NAME = "Pathnex"
+        INSTITUTE_NAME = "HireReady"
         TEAM = "QA"
         ENV = "dev"
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Pathnex/sample-java-app.git'
+                git url: 'https://github.com/HireReady/sample-java-app.git'
             }
         }
         stage('Unit Test') {
@@ -121,7 +121,7 @@ stages:
   - integration
 
 variables:
-  INSTITUTE_NAME: "Pathnex"
+  INSTITUTE_NAME: "HireReady"
   TEAM: "QA"
   ENV: "dev"
 
